@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="CSS/font-awesome.css">
 	<style>
 		* {
-			box-sizing: border-box;
+			box-sizing: border-box;			
 		}
 		.topbar {
 			height: 29px;
@@ -57,6 +57,7 @@
 			outline: none;
 			padding-left: 0.6em;	/* CSS中：0.6可以简写为.6 */
 			padding-right: 0.6em;
+			vertical-align: middle;	 
 		}
 		.search>.fa-search{
 			background-color: #57bc4c;
@@ -70,8 +71,48 @@
 		}
 		.search{
 			float: right;	/* 搜索条右浮动 */
-			/* margin-top: 6px; */
-			padding-top: 6px;
+			margin-top: 6px; 
+			/* padding-top: 6px; */
+		}
+		.cart-container{
+			position: relative;		/* 修改购物车的定位方式,为下拉菜单建立参照物,但不脱离文档流 */
+			float: right;
+			margin-top: 6px;
+			margin-left: 20px;
+		}
+		.cart{
+			background-color: #F9F9F9;
+			border: 1px solid #ddd;
+			line-height: 31px;
+			cursor: pointer;		/* 修改光标的样式 */
+			position: relative;		/* 只有定位了的元素才能使用z-index */
+			z-index: 1;
+			/* border-bottom-color: #fff;*/	/* 下边框的颜色 */
+			border-bottom: none;
+			}
+		.cart>.fa{
+			padding-left: 0.6em;
+			padding-right: 0.6em;
+			color: #57BC4C;
+		}
+		.state1{
+			transform: rotate(0);
+			transition: all .3s;
+		}
+		.state2{
+			transform: rotate(180deg);
+		}
+		.cart-container>.dropdown{
+			position: absolute;		/* 绝对定位的元素可以处于其他元素的上方 */
+			top: 31px;
+			right: 0;
+			border: 1px solid #ddd;
+			/* padding: 2em  3em  2em  3em; */	/* 上右下左,顺时针方向 */
+			/* padding: 2em  3em  2em  ; */		/* 上右下,左和右相同 */
+			padding: 2em  3em;		/* 上右 ,下和上相同,左和右相同 */
+			width: 280px;
+			background: #fff;	/* div元素的默认背景颜色为透明色 */
+		
 		}
 	</style>
 </head>
@@ -100,15 +141,34 @@
 		<div class="container">
 			<!-- logo -->
 			<img src="img/logo.png" alt="iweb前端">
+			<!-- 3.我的购物车 -->
+			<div class="cart-container">
+				<!-- 购物车:z-index要高于“下拉菜单” -->
+				<div class="cart">
+					<span class="fa fa-shopping-cart fa-lg "></span>
+					<span>我的购物车(<b>0</b>)</span>
+					<span class="fa fa-caret-down fa-lg state1" id="b1"></span>
+				</div>
+				<!-- 下拉菜单 -->
+				<div class="dropdown">
+					请登录后查看您的购物车
+				</div>
+			</div>
+			<!-- 输入框 -->
 			<div class="search">
 				<input type="text" placeholder="课程搜索"/><span class="fa fa-search fa-lg"></span>
-				<!-- 输入框 -->
 			</div>
-			
-			
-			<!-- 购物车 -->
 		</div>
 	</div>
 	<hr >
+	
+	<script >
+		b1.onmouseenter = ()=>{
+			b1.classList.add('state2')
+		}
+		b1.onmouseleave =()=>{
+			b1.classList.remove('state2')
+		}
+	</script>
 </body>
 </html>
