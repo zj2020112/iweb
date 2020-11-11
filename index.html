@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>iweb在在线课堂</title>
+	<link rel="stylesheet" type="text/css" href="CSS/style.css"/>
 	<link rel="stylesheet" href="CSS/font-awesome.css">
 	<style>
 		* {
@@ -35,8 +36,7 @@
 			margin-right: auto;
 			border: 1px solid #aaa;  /* 测试使用 */
 		}
-		.theme {		/* 主提色 */
-			
+		.theme {		/* 主提色 */	
 		}
 		.theme-reverse {		/* 主题色的反色 */
 			color: #f60;
@@ -80,15 +80,20 @@
 			margin-top: 6px;
 			margin-left: 20px;
 		}
-		.cart{
+		.cart{			/* 购物车下面没有"下拉菜单"时的样式 */
 			background-color: #F9F9F9;
 			border: 1px solid #ddd;
-			line-height: 31px;
+			line-height: 30px;
 			cursor: pointer;		/* 修改光标的样式 */
 			position: relative;		/* 只有定位了的元素才能使用z-index */
 			z-index: 1;
 			/* border-bottom-color: #fff;*/	/* 下边框的颜色 */
+			
+			}
+		.cart.open{			/* 购物车下拉菜单之后的样式 */
+			background-color: #fff;
 			border-bottom: none;
+			line-height: 31px;
 			}
 		.cart>.fa{
 			padding-left: 0.6em;
@@ -102,21 +107,46 @@
 		.state2{
 			transform: rotate(180deg);
 		}
-		.cart-container>.dropdown{
+		.cart-container>.dropdown{		/* 下拉菜单不显示时的样式 */
 			position: absolute;		/* 绝对定位的元素可以处于其他元素的上方 */
 			top: 31px;
-			right: 0;
+			right: 0; 
 			border: 1px solid #ddd;
 			/* padding: 2em  3em  2em  3em; */	/* 上右下左,顺时针方向 */
 			/* padding: 2em  3em  2em  ; */		/* 上右下,左和右相同 */
 			padding: 2em  3em;		/* 上右 ,下和上相同,左和右相同 */
 			width: 280px;
 			background: #fff;	/* div元素的默认背景颜色为透明色 */
-		
+			display: none; 	/* 不显示下拉菜单 */
 		}
+		.cart-container>.dropdown.open{
+			display: block;
+		}
+		.navbar{
+			height: 42px;
+			background-color: #57BC4C;
+			border-bottom: 2px solid #c1eebd;
+			line-height: 40px;
+			color: #fff;
+			font-size: 1.2em;
+		}
+		.navbar .menu{
+			text-decoration: none;
+		}
+		.navbar .menu li{
+			float: left;	让原本的块元素浮动起来
+			padding-right: 1.5em;
+		}
+		.navbar .menu li:hover{
+			color: #4aaf3f;
+		}
+		.navbar .menu li a{
+			color: #fff;
+		} 
 	</style>
 </head>
 <body>
+	<!-- 1楼：顶部条 -->
 	<div class="topbar">
 		<div class="container">
 			<a href="#">
@@ -137,20 +167,22 @@
 			</span>
 		</div>
 	</div>
+	
+	<!-- 2楼：搜索条 -->
 	<div class="searchbar">
 		<div class="container">
 			<!-- logo -->
 			<img src="img/logo.png" alt="iweb前端">
 			<!-- 3.我的购物车 -->
-			<div class="cart-container">
+			<div class="cart-container" id="myCart">
 				<!-- 购物车:z-index要高于“下拉菜单” -->
-				<div class="cart">
+				<div class="cart" id="cart">
 					<span class="fa fa-shopping-cart fa-lg "></span>
 					<span>我的购物车(<b>0</b>)</span>
 					<span class="fa fa-caret-down fa-lg state1" id="b1"></span>
 				</div>
 				<!-- 下拉菜单 -->
-				<div class="dropdown">
+				<div class="dropdown" id="dropdown">
 					请登录后查看您的购物车
 				</div>
 			</div>
@@ -160,14 +192,35 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 3楼：导航条 -->
+	<div class="navbar">
+		<div class="container">
+			<!-- 左侧的功能菜单 -->
+			<ul class="menu">
+				<li><a href="index.html">首页</a></li>
+				<li><a href="course.html">全部课程</a></li>
+				<li><a href="course.html?tid=1">基础课程</a></li>
+				<li><a href="course.html?tid=2">核心课程</a></li>
+				<li><a href="course.html?tid=3">进阶课程</a></li>
+				<li><a href="teacher.html">名师堂</a></li>
+				<li><a href="school.html">校区</a></li>
+			</ul>
+			<!-- 右侧的登录/注册菜单 -->
+		</div>
+	</div>
 	<hr >
 	
-	<script >
-		b1.onmouseenter = ()=>{
+	<script>
+		myCart.onmouseenter = ()=>{
 			b1.classList.add('state2')
+			cart.classList.add('open')
+			dropdown.classList.add('open')
 		}
-		b1.onmouseleave =()=>{
+		myCart.onmouseleave =()=>{
 			b1.classList.remove('state2')
+			cart.classList.remove('open')
+			dropdown.classList.remove('open')
 		}
 	</script>
 </body>
